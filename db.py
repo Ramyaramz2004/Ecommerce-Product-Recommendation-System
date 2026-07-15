@@ -2,15 +2,9 @@ from sqlalchemy import create_engine
 import pandas as pd
 import os
 
-HOST = os.getenv("MYSQLHOST")
-PORT = os.getenv("MYSQLPORT")
-DATABASE = os.getenv("MYSQLDATABASE")
-USER = os.getenv("MYSQLUSER")
-PASSWORD = os.getenv("MYSQLPASSWORD")
+DATABASE_URL = os.getenv("MYSQL_URL")
 
-engine = create_engine(
-    f"mysql+pymysql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}"
-)
+engine = create_engine(DATABASE_URL)
 
 def get_products():
     return pd.read_sql("SELECT * FROM products", engine)
