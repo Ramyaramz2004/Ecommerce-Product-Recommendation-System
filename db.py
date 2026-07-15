@@ -1,15 +1,25 @@
 from sqlalchemy import create_engine
 import pandas as pd
-engine=create_engine("mysql+pymysql://root:2004@localhost/ecommerce")
+import os
+
+HOST = os.getenv("MYSQLHOST")
+PORT = os.getenv("MYSQLPORT")
+DATABASE = os.getenv("MYSQLDATABASE")
+USER = os.getenv("MYSQLUSER")
+PASSWORD = os.getenv("MYSQLPASSWORD")
+
+engine = create_engine(
+    f"mysql+pymysql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}"
+)
+
 def get_products():
-    query="SELECT * FROM products"
-    return pd.read_sql(query,engine)
+    return pd.read_sql("SELECT * FROM products", engine)
+
 def get_customers():
-    query="SELECT * from customers"
-    return pd.read_sql(query,engine)
+    return pd.read_sql("SELECT * FROM customers", engine)
+
 def get_orders():
-    query="SELECT * from orders"
-    return pd.read_sql(query,engine)
+    return pd.read_sql("SELECT * FROM orders", engine)
+
 def get_order_items():
-    query="SELECT * from order_items"
-    return pd.read_sql(query,engine)
+    return pd.read_sql("SELECT * FROM order_items", engine)
