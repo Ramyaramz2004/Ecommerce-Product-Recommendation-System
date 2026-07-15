@@ -4,6 +4,12 @@ import os
 
 DATABASE_URL = os.getenv("MYSQL_URL")
 
+# Convert Railway URL to use PyMySQL
+DATABASE_URL = DATABASE_URL.replace(
+    "mysql://",
+    "mysql+pymysql://"
+)
+
 engine = create_engine(DATABASE_URL)
 
 def get_products():
